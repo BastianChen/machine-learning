@@ -45,13 +45,10 @@ class Trainer:
                 self.optimizer.step()
                 self.writer.add_scalar("loss", loss, index)
                 index += 1
-                # print(f"Train epoch:{epoch}, step:{index}, loss:{loss.item()}")
             self.validate(epoch)
             torch.save(self.net.state_dict(), self.save_path)
 
     def validate(self, epoch):
-        # self.map_location = None if torch.cuda.is_available() else lambda storage, loc: storage
-        # self.net.load_state_dict(torch.load(self.save_path, map_location=self.map_location))
         self.net.eval()
 
         test_loss = 0

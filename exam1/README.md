@@ -16,21 +16,9 @@
 
 ![网络一](images/网络一.png)
 
-[//]: # (<p align="center">)
-
-[//]: # (    <img src="images/网络一.png">)
-
-[//]: # (</p>)
-
 - 使用三层Conv算子加两层Linear算子搭建，后面统称该网络为网络二：
  
 ![网络二](images/网络二.png)
-
-[//]: # (<p align="center">)
-
-[//]: # (    <img src="images/网络二.png">)
-
-[//]: # (</p>)
 
 备注：
 Linear(输入数据大小，输出数据大小)
