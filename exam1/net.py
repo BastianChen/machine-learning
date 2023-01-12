@@ -73,5 +73,7 @@ if __name__ == '__main__':
     # output = net(x)
     # print(output.shape)
     net = Net_Conv()
+    params = sum([param.numel() for param in net.parameters()])
+    print(params)
     output = net(x)
     print(output.shape)
