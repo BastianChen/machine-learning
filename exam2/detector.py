@@ -4,6 +4,7 @@ from torch.utils.data import DataLoader
 from tensorboardX import SummaryWriter
 from gen_datasets import Datasets
 import argparse
+import time
 
 
 class Detector:
@@ -27,24 +28,31 @@ class Detector:
         self.net.eval()
         correct = 0
         step = 1
+        start_time, end_time = 0, 0
+        time_list = []
         with torch.no_grad():
-            for data, label, image in self.test_dataset:
+            for index, (data, label, image) in enumerate(self.test_dataset):
                 data, label = data.to(self.device), label.to(self.device)
+                start_time = time.time()
                 outputs = self.net(data)
+                end_time = time.time()
+                inference_time = end_time - start_time
+                if index > 0:
+                    time_list.append(inference_time)
                 pred = outputs.argmax(dim=1, keepdim=True)
                 label = label.argmax(dim=1, keepdim=True)
                 num = pred.eq(label).sum().item()
                 if num == 0:
                     image = image.swapaxes(2, 3)
                     image = image.swapaxes(1, 2)
-                    print(outputs)
                     self.writer.add_images(f"error_image_pred_{pred.item()}", image, step)
                     step += 1
                 correct += num
 
         acc = 100. * correct / len(self.test_dataset.dataset)
 
-        print(f'accuracy: {correct}/{len(self.test_dataset.dataset)} ({acc:.3f}%)')
+        print(
+            f'accuracy: {correct}/{len(self.test_dataset.dataset)} ({acc:.3f}%) ,mean_latency:{sum(time_list) / len(time_list)}')
 
 
 if __name__ == '__main__':
