@@ -28,7 +28,6 @@ class Detector:
         self.net.eval()
         correct = 0
         step = 1
-        start_time, end_time = 0, 0
         time_list = []
         with torch.no_grad():
             for index, (data, label, image) in enumerate(self.test_dataset):
