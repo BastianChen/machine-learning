@@ -29,6 +29,7 @@ def get_onnx(args, input_tensor):
                           input_names=['input'], output_names=['output'])
 
 
+# 验证输出的onnx文件是否正确
 def check_onnx_model(args):
     sess = rt.InferenceSession(args.onnx_file_path)
     inputs_name = sess.get_inputs()[0].name
@@ -41,10 +42,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--torch_file_path", type=str,
                         default='models/resnet34_without_data_augmentation-lr8e-05-epoch30-channels3.pth',
-                        help='torch_file_path')
+                        help='name of the torch file path')
     parser.add_argument("--onnx_file_path", type=str,
                         default='models/resnet34_without_data_augmentation-lr8e-05-epoch30-channels3.onnx',
-                        help='onnx_file_path')
+                        help='name of the onnx file path')
     parser.add_argument('-m', '--model', default=3, type=int, help="model type,1:net9layers,2:net44layers,3:resnet")
     parser.add_argument('-c', '--channels', default=3, type=int, help="channels of images")
     parser.add_argument('-t', '--type', default='34', type=str,
