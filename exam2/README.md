@@ -96,6 +96,7 @@ python detector.py -m 3 -dp datasets所在路径
 ### 加速环境
 
 - Windows 11
+- NVIDIA GeForce RTX 3060
 - python 3.7.13
 - TensorRT 8.4.1.5
 - cuda 11.6
