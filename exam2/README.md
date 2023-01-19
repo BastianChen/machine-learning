@@ -138,9 +138,9 @@ python trt_infer.py --trt_file_path trt文件路径 -dp datasets所在路径
 | resnet34-xxx-int8.trt  | **99.788%**   | **0.000452**      | **20.7**    |
 
 ### 该部分参考博客
-https://zhuanlan.zhihu.com/p/467401558
-https://zhuanlan.zhihu.com/p/371239130
-https://zhuanlan.zhihu.com/p/527238167
+https://zhuanlan.zhihu.com/p/467401558    
+https://zhuanlan.zhihu.com/p/371239130   
+https://zhuanlan.zhihu.com/p/527238167   
 
 ## 2.C++版本
 仍在实验当中
