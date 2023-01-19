@@ -1,6 +1,6 @@
 # 实验介绍
 
-pytorch实现狗品种二分类。
+pytorch实现狗品种二分类以及tensorrt加速
 
 # 开发环境
 
@@ -90,3 +90,57 @@ python detector.py -m 3 -dp datasets所在路径
 | resnet18 | 99.15%   |
 | resnet34 | 99.58%   |
 | resnet50 | 99.79%   |
+
+# TensorRT加速
+## 1.Python版本
+### 加速环境
+
+- Windows 11
+- python 3.7.13
+- TensorRT 8.4.1.5
+- cuda 11.6
+- cudnn 8.4
+- onnxruntime 1.12.1
+
+### pth权重文件转onnx权重文件
+```python
+python to_onnx.py --torch_file_path pth文件路径 --onnx_file_path onnx文件输出路径
+```
+
+### onnx文件转trt文件
+使用TensorRT/bin目录下的trtexec进行模型转换（默认情况下转换为TF32数据格式）：
+```bash
+.\trtexec.exe --onnx=onnx文件路径 --saveEngine=trt文件输出路径 --workspace=6000
+```
+
+float16转换:
+```bash
+.\trtexec.exe --onnx=onnx文件路径 --saveEngine=trt文件输出路径 --workspace=6000 --fp16
+```
+
+int8转换:
+```bash
+.\trtexec.exe --onnx=onnx文件路径 --saveEngine=trt文件输出路径 --workspace=6000 --int8
+```
+
+### python调用trt文件进行推理
+```python
+python trt_infer.py --trt_file_path trt文件路径 -dp datasets所在路径
+```
+
+### 实验结果
+
+| 模型                     | acc           | 平均latency（单位s）    | 文件大小（单位MB）  |
+|------------------------|---------------|-------------------|-------------|
+| resnet34-xxx.pth       | 99.575%       | 0.004614          | 81.3        |
+| resnet34-xxx.trt(tf32) | 99.575%       | 0.000749          | 115         |
+| resnet34-xxx-fp16.trt  | 99.575%       | 0.000557          | 41.0        |
+| resnet34-xxx-int8.trt  | **99.788%**   | **0.000452**      | **20.7**    |
+
+### 该部分参考博客
+https://zhuanlan.zhihu.com/p/467401558
+https://zhuanlan.zhihu.com/p/371239130
+https://zhuanlan.zhihu.com/p/527238167
+
+## 2.C++版本
+仍在实验当中
