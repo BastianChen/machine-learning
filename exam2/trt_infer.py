@@ -105,7 +105,6 @@ class Detector:
             outputs = trt_model(data)
             end_time = time.time()
             inference_time = end_time - start_time
-            print(f"latency:{inference_time}s")
             if index > 0:
                 time_list.append(inference_time)
             pred = outputs.argmax(dim=1, keepdim=True)
@@ -122,7 +121,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--channels', default=3, type=int, help="channels of images")
     parser.add_argument('-t', '--trt_file_path',
-                        default="models/resnet34_without_data_augmentation-lr8e-05-epoch30-channels3-fp16.trt",
+                        default="models/resnet34_without_data_augmentation-lr8e-05-epoch30-channels3-int8.trt",
                         type=str, help="name of trt file path")
     parser.add_argument('-dp', '--datasets_path', default="datasets",
                         type=str, help="path of Datasets")
