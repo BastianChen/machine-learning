@@ -1,5 +1,5 @@
 # 实验介绍
-基于Pytorch深度学习框架实现MNIST手写数字识别。
+基于Pytorch深度学习框架实现MNIST手写数字识别，并用TensorRT进行加速。
 
 # 开发环境
 - windows 11
@@ -8,6 +8,7 @@
 - python 3.7.13
 - tensorboard 1.15.0
 - tensorboardx 2.5.1
+- tensorrt 8.6.1.6
 
 # 网络架构
 自己搭建了两种简单的网络:
@@ -27,11 +28,11 @@ MaxPool(池化核大小，步长)
 # 实验结果
 损失loss：
 <p align="center">
-    <img src="images/loss.png">
+  <img src="images/loss.png">
 </p>
 精度acc：
 <p align="center">
-    <img src="images/acc.png">
+  <img src="images/acc.png">
 </p>
 不同学习率以及epoch对应的网络精度如下表所示：
 
@@ -60,3 +61,18 @@ python trainer.py -m 0 -l 1e-03 -e 20
 | -m | --model | 网络运行时选用的模型。0：选用网络一；1：选用网络2，默认值为1。 |
 | -l | --lr_rate | 学习率，默认值为5e-04。                    |
 | -e | --epoch | epoch数，默认值为20。                    |
+
+启动推理：
+```python
+python infer.py
+```
+
+构建trt模型：
+```python
+python build_trt_net.py
+```
+
+推理trt模型：
+```python
+python trt_infer.py
+```
